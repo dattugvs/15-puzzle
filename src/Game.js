@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Moves from './Moves';
 import Board from './Board';
-import { UP, LEFT, RIGHT, DOWN } from './constants/directions';
-import {shuffle, getEmptyIndex, getNeighbour, checkWin} from './Puzzle'
+import { Directions, PuzzleConstants } from './constants/constants';
+import {Puzzle} from './Puzzle'
 class Game extends Component {
     constructor(props) 
     {
@@ -37,16 +37,16 @@ class Game extends Component {
         switch (e.keyCode) 
         {
             case 37:
-                this.makeMove(LEFT)
+                this.makeMove(Directions.LEFT)
                 break;
             case 38:
-                this.makeMove(UP)
+                this.makeMove(Directions.UP)
                 break;
             case 39:
-                this.makeMove(RIGHT)
+                this.makeMove(Directions.RIGHT)
                 break;
             case 40:
-                this.makeMove(DOWN)
+                this.makeMove(Directions.DOWN)
                 break;
             default  : break;
         }
@@ -56,16 +56,16 @@ class Game extends Component {
     {
         
         var emptyIndex = this.state.emptyIndex;
-        var neighbourIndex = getNeighbour(emptyIndex, direction);
+        var neighbourIndex = Puzzle.getNeighbour(emptyIndex, direction);
         
         if(neighbourIndex !== -1)
         {
             var numbers = this.state.numbers.slice();
             numbers[emptyIndex] = numbers[neighbourIndex];
-            numbers[neighbourIndex] = null;
+            numbers[neighbourIndex] = PuzzleConstants.EmptyTile;
             emptyIndex = neighbourIndex;
             
-            var isSolved = checkWin(numbers);
+            var isSolved = Puzzle.checkWin(numbers);
             if(isSolved === true)
             {
                 alert("you solved the puzzle !!");
@@ -86,9 +86,9 @@ class Game extends Component {
 
     newGame()
     {
-        var numbers = shuffle([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,null]);
-        var emptyIndex = getEmptyIndex(numbers);
-        
+        var numbers = Puzzle.shuffle([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,PuzzleConstants.EmptyTile]);
+        var emptyIndex = Puzzle.getEmptyIndex(numbers);
+        console.log(numbers);
         return {
             moves : 0,
             numbers : numbers,

@@ -1,6 +1,6 @@
-import { UP, DOWN, LEFT, RIGHT } from "../constants/directions";
+import { Directions, PuzzleConstants } from "../constants/constants";
 
-export function shuffle(array) 
+function shuffle(array) 
 {
     var currentIndex = array.length, temporaryValue, randomIndex;
   
@@ -16,11 +16,11 @@ export function shuffle(array)
     return array;
 }
 
-export function getEmptyIndex(a) 
+function getEmptyIndex(a) 
 {
     for(let i=0; i<15; i++)
     {
-        if(a[i] === null)
+        if(a[i] === PuzzleConstants.EmptyTile)
         {
             return i;
         }
@@ -28,19 +28,19 @@ export function getEmptyIndex(a)
     return -1; // error case
 }
 
-export function getNeighbour(index, direction)
+function getNeighbour(index, direction)
 {
     switch(direction)
     {
-        case UP     : return ([12, 13, 14, 15]).indexOf(index) === -1 ? index+4 : -1;
-        case DOWN   : return ([0, 1, 2, 3]).indexOf(index) === -1 ? index-4 : -1;
-        case LEFT   : return ([3, 7, 11, 15]).indexOf(index) === -1 ? index+1 : -1;
-        case RIGHT  : return ([0,4,8,12]).indexOf(index) === -1 ? index-1 : -1;
+        case Directions.UP     : return ([12, 13, 14, 15]).indexOf(index) === -1 ? index+4 : -1;
+        case Directions.DOWN   : return ([0, 1, 2, 3]).indexOf(index) === -1 ? index-4 : -1;
+        case Directions.LEFT   : return ([3, 7, 11, 15]).indexOf(index) === -1 ? index+1 : -1;
+        case Directions.RIGHT  : return ([0,4,8,12]).indexOf(index) === -1 ? index-1 : -1;
         default     : return -1; // wrong direction - error case
     }
 }
 
-export function checkWin(a) 
+function checkWin(a) 
 {
     for(let i=0; i<15; i++)
     {
@@ -50,4 +50,11 @@ export function checkWin(a)
         }
     }
     return true;
+}
+
+export const Puzzle = {
+    shuffle: shuffle,
+    getEmptyIndex: getEmptyIndex,
+    getNeighbour: getNeighbour,
+    checkWin: checkWin
 }

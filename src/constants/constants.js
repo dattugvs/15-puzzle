@@ -1,0 +1,10 @@
+export const Directions = {
+    UP: "UP",
+    DOWN: "DOWN",
+    LEFT: "LEFT",
+    RIGHT: "RIGHT"
+}
+
+export const PuzzleConstants = {
+    EmptyTile: '?'
+};
